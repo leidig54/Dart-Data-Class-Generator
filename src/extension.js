@@ -1351,9 +1351,10 @@ class DataClassGenerator {
         if (p.isPrimitive) {
           method += `(${value}${defaultValue} as ${p.type})`;
         } else {
-          method += `(${value} as List<dynamic>).map<${
-            p.listType.rawType
-          }>((x) => ${customTypeMapping(p, "x")},),${defaultValue})`;
+          method += `(${value} ?? const []).map((x) => ${customTypeMapping(
+            p,
+            "x"
+          )},),${defaultValue})`;
         }
         /// (map['name'] ?? '') as String
       } else {
