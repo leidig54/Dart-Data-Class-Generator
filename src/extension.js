@@ -1349,7 +1349,7 @@ class DataClassGenerator {
         method += `${p.type}.from(`;
         /// List<String>.from(map['allowed'] ?? const <String>[] as List<String>),
         if (p.isPrimitive) {
-          method += `(${value}${defaultValue} as ${p.type})`;
+          method += `(${value}${defaultValue})`;
         } else {
           method += `(${value} ?? const []).map((x) => ${customTypeMapping(
             p,
