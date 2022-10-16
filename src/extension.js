@@ -1231,7 +1231,7 @@ class DataClassGenerator {
       if (p.isEnum) {
         if (p.isCollection)
           method += `${p.name}.map((x) => x.index).toList(),\n`;
-        else method += `${p.name}.index,\n`;
+        else method += `${p.name}.name,\n`;
       } else if (p.isCollection) {
         if (p.isMap || p.listType.isPrimitive) {
           const mapFlag = p.isSet
@@ -1338,7 +1338,11 @@ class DataClassGenerator {
           method += `${p.type}.from((${leftOfValue}${value}${defaultValue}${rightOfValue} as List<int>).map<${p.listType.rawType}>((x) => ${p.listType.rawType}.values[x]),)`;
         } else {
           const defaultValue = withDefaultValues ? " ?? 0" : "";
-          method += `${p.rawType}.values[${leftOfValue}${value}${defaultValue}${rightOfValue} as int]`;
+          method += `${
+            p.rawType
+          }.values.firstWhereOrNull((element) => element.name == map['${p.rawType.toLowerCase()}']) ?? ${
+            p.rawType
+          }.values[0]`;
         }
       } else if (p.isCollection) {
         const defaultValue =
