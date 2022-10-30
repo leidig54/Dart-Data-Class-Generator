@@ -1338,7 +1338,11 @@ class DataClassGenerator {
           method += `${p.type}.from((${leftOfValue}${value}${defaultValue}${rightOfValue} as List<int>).map<${p.listType.rawType}>((x) => ${p.listType.rawType}.values[x]),)`;
         } else {
           const defaultValue = withDefaultValues ? " ?? 0" : "";
-          method += `${p.rawType}.values.firstWhereOrNull((element) => element.name == map['${p.rawType}']) ?? ${p.rawType}.values[0]`;
+          method += `${
+            p.rawType
+          }.values.firstWhereOrNull((element) => element.name == map['${p.rawType.toLowerCase()}']) ?? ${
+            p.rawType
+          }.values[0]`;
         }
       } else if (p.isCollection) {
         const defaultValue =
