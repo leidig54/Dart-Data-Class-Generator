@@ -1289,9 +1289,9 @@ class DataClassGenerator {
       switch (prop.type) {
         case "DateTime":
           value = withDefaultValues
-            ? `${leftOfValue}${value}??0${rightOfValue}`
+            ? `${leftOfValue}${value}?? Timestamp(0, 0)${rightOfValue}`
             : value;
-          return `(${value}${materialConvertValue} as Timestamp).toDate()`;
+          return `(${value} as Timestamp).toDate()`;
         case "Color":
           value = withDefaultValues
             ? `${leftOfValue}${value}??0${rightOfValue}`
