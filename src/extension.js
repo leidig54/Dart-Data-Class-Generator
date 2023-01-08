@@ -1211,7 +1211,7 @@ class DataClassGenerator {
 
       switch (prop.type) {
         case "DateTime":
-          return `${name}${nullSafe}.millisecondsSinceEpoch${endFlag}`;
+          return `Timestamp.fromDate(${name}${nullSafe})${endFlag}`;
         case "Color":
           return `${name}${nullSafe}.value${endFlag}`;
         case "IconData":
