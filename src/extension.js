@@ -1335,7 +1335,7 @@ class DataClassGenerator {
         // List<E>
         if (p.isCollection) {
           const defaultValue = withDefaultValues ? " ?? <int>[]" : "";
-          method += `${p.type}.from((${leftOfValue}${value}${defaultValue}${rightOfValue} as List<int>).map<${p.listType.rawType}>((x) => ${p.listType.rawType}.values[x]),)`;
+          method += `${p.type}.from(${leftOfValue}${value}${defaultValue}${rightOfValue} as List<int>).map<${p.listType.rawType}>((x) => ${p.listType.rawType}.values[x]),)`;
         } else {
           const defaultValue = withDefaultValues ? " ?? 0" : "";
           method += `${
@@ -1350,7 +1350,7 @@ class DataClassGenerator {
             ? ` ?? const <${p.listType.rawType}>${p.isList ? "[]" : "{}"})`
             : "";
 
-        method += `${p.type}.from(`;
+        method += `${p.type}.from`;
         /// List<String>.from(map['allowed'] ?? const <String>[] as List<String>),
         if (p.isPrimitive) {
           method += `(${value}${defaultValue})`;
