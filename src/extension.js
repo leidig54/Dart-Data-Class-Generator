@@ -1211,7 +1211,11 @@ class DataClassGenerator {
 
       switch (prop.type) {
         case "DateTime":
-          return `Timestamp.fromDate(${name}${nullSafe})${endFlag}`;
+          if (prop.isNullable) {
+            return ` ${name} != null ? Timestamp.fromDate(${name}!) : null${endFlag}`;
+          } else {
+            return `Timestamp.fromDate(${name}${nullSafe})${endFlag}`;
+          }
         case "Color":
           return `${name}${nullSafe}.value${endFlag}`;
         case "IconData":
@@ -1231,7 +1235,7 @@ class DataClassGenerator {
       if (p.isEnum) {
         if (p.isCollection)
           method += `${p.name}.map((x) => x.index).toList(),\n`;
-        else method += `${p.name}.name,\n`;
+        else method += `${p.name}?.name,\n`;
       } else if (p.isCollection) {
         if (p.isMap || p.listType.isPrimitive) {
           const mapFlag = p.isSet
@@ -1313,7 +1317,7 @@ class DataClassGenerator {
                 ? ".toInt()"
                 : ""
               : ""
-          }${isAddDefault ? ` ?? ${prop.defValue}${addRightDefault}` : ""}`;
+          }${isAddDefault ? ` ${addRightDefault}` : ""}`;
       }
     }
 
@@ -1358,7 +1362,7 @@ class DataClassGenerator {
           method += `(${value} ?? const []).map((x) => ${customTypeMapping(
             p,
             "x"
-          )},),${defaultValue})`;
+          )}.toList()`;
         }
         /// (map['name'] ?? '') as String
       } else {
