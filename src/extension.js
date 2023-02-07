@@ -1344,9 +1344,10 @@ class DataClassGenerator {
           const defaultValue = withDefaultValues ? " ?? 0" : "";
           method += `${
             p.rawType
-          }.values.firstWhereOrNull((element) => element.name == map['${p.rawType.toLowerCase()}']) ?? ${
-            p.rawType
-          }.values[0]`;
+          }.values.firstWhereOrNull((element) => element.name == map['${p.rawType
+            .replace(/[.,\/#!$%\^?&\*;:{}=\-_`~()]/g, "")
+            .charAt(0)
+            .toLowerCase()}']) ?? ${p.rawType}.values[0]`;
         }
       } else if (p.isCollection) {
         const defaultValue =
